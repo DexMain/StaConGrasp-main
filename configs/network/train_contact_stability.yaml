@@ -1,0 +1,155 @@
+# CSNet training: contact diffusion backbone + 4-d stability head
+batch_size: 4
+ckpt: null
+contact_v2_ckpt: experiments/contact_diffusion/ckpt/ckpt_5000.pth
+exp_name: contact_stability
+gpu: 0
+grad_clip: 1.0
+log_every: 10
+lr: 0.001
+lr_contact: 0.0001
+lr_min: 1.0e-06
+max_iter: 3000
+max_grasps: 16
+phy_num_points: 4096
+phy_cdist_chunk: 2048
+freeze_contact_iters: 500
+use_success_filter: 1
+use_fps_grasps_only: 1
+success_indices_root: null
+fps_root: null
+contact_gt_cache: /data/contact_gt_v2_cache
+urdf_path: robot_models/urdf/leap_hand_simplified.urdf
+meta_path: robot_models/meta/leap_hand/meta.yaml
+hand_name: leap_hand
+data:
+  camera: realsense
+  fraction: 1
+  grasp_data: poses_gn
+  graspness_data: dex_graspness_rebuild
+  graspness_fallback: dex_graspness_rebuild
+  k: 64
+  max_point_dis: 0.006
+  num_points: 40000
+  rand_angle: 0
+  render: 1
+  resample: 1
+  robot: leap_hand
+  sample_total: 128
+  scene_fraction: 1
+  voxel_size: 0.005
+model:
+  backbone: sparseconv
+  backbone_parameters:
+    pct:
+      dropout: 0.0
+      use_batch_norm: true
+      use_flash_attn: true
+    ptv3: {}
+    sparseconv: {}
+    sparse_glob_conv: {}
+  basic_inner:
+    t_dim: -1
+  cvae:
+    cvae_condition_size: 512
+    cvae_decoder_sizes:
+    - 1024
+    - 256
+    - 22
+    cvae_encoder_sizes:
+    - 1024
+    - 512
+    - 256
+    cvae_latent_size: 64
+    obj_inchannel: 3
+  diffusion:
+    clip_sample: false
+    log_prob_type: accurate_cont
+    num_inference_timesteps: 200
+    ode: 1
+    scheduler:
+      num_train_timesteps: 1000
+      prediction_type: v_prediction
+    scheduler_type: DDPMScheduler
+  dist_joint: 0
+  equi_inner:
+    equi: 0
+    t_dim: 16
+  feature_dim: 512
+  graspness_thresh: 0.1
+  joint_num: 16
+  joint_scale: 1
+  mobius:
+    k: 32
+    layer: 24
+  norm_gt: 0
+  sample_num: 4
+  se3_diffusion:
+    inference_steps: 400
+    log_prob_type: accurate_cont
+    no_final_step_noise: 1
+    ode: 1
+    scale_loss: epsilon
+    schedule:
+      max: 0.9999
+      min: 5.0e-05
+      s: 0.0025
+      type: cosine
+    score_euc_rep: epsilon
+    score_rot_rep: epsilon
+    train_sample_num: 15
+  trans_diffusion:
+    num_inference_timesteps: 1000
+    scheduler:
+      num_train_timesteps: 1000
+      prediction_type: epsilon
+    scheduler_type: DDPMScheduler
+    time_dim: 16
+  trans_scale: 25
+  type: graspness_diffusion
+  weight:
+    diffusion: 10.0
+    euc: 1.0
+    euc_diff: 1.0
+    graspness: 1.0
+    joint: 1.0
+    nll: 1.0
+    objectness: 1.0
+    pose_rot: 1.0
+    pose_trans: 1.0
+    quat: 1.0
+    rot: 1.0
+    rot_diff: 1.0
+contact_stability:
+  contact:
+    feature_dim: 512
+    cond_dim: 256
+    num_fingertips: 4
+    hidden_dim: 512
+    contact_thresh: 0.015
+    num_train_timesteps: 1000
+    num_inference_timesteps: 100
+    prediction_type: epsilon
+    log_prob_type: null
+    ode: true
+    fit_steps: 8
+    fit_lr: 0.005
+    fit_max_trans_delta: 0.01
+    fit_max_rot_delta: 0.26
+    fit_max_q_delta: 0.10
+    fit_w_contact: 1.0
+    fit_w_pose: 0.05
+    fit_w_joint: 0.02
+  shape_feat_dim: 32
+  stability_hidden_dim: 256
+  elongated_ratio_thresh: 8.0
+  lambda_stab: 1.0
+  elongated_loss_boost: 3.0
+num_workers: 8
+save_every: 200
+seed: 0
+train_split: train-none
+val_every: 200
+val_num: 5
+val_split:
+- val

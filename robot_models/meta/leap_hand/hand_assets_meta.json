@@ -1,0 +1,11 @@
+{
+    "xml_path": {
+        "leap_hand": "robot_models/meta/leap_hand/palmar_surface_points.xml"
+    },
+    "urdf_path": {
+        "leap_hand": "robot_models/urdf/leap_hand_simplified.urdf"
+    },
+    "penetration_keypoints": {
+        "leap_hand": "robot_models/meta/leap_hand/penetration_keypoints.json"
+    }
+}
