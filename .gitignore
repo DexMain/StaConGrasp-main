@@ -1,0 +1,117 @@
+# ============================================
+# CADGrasp .gitignore
+# ============================================
+
+# ==== Python ====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ==== Data Directories ====
+# All data should be downloaded separately via data/hfd.sh
+/data/
+
+# ==== Large Model Files ====
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.tar.bz2
+*.tar.gz
+*.zip
+
+# ==== Outputs & Results ====
+/outputs/
+/results/
+/logs/
+/experiments/
+/wandb/
+
+# ==== Log Files ====
+*.log
+*.txt
+!README.txt
+!requirements.txt
+
+# ==== Visualization Outputs ====
+*.html
+/visualize/
+/figure/*.png
+
+# ==== Third Party Build Artifacts ====
+# torchprimitivesdf is tracked as submodule, ignore its build outputs
+/thirdparty/torchprimitivesdf/build/
+/thirdparty/torchprimitivesdf/*.egg-info/
+/thirdparty/MinkowskiEngine/build/
+/thirdparty/MinkowskiEngine/*.egg-info/
+/thirdparty/TorchSDF/build/
+/thirdparty/TorchSDF/*.egg-info/
+
+# ==== Temporary & Generated Files ====
+tmp/
+temp/
+test_file
+a.py
+
+# ==== IDE & Editor ====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==== OS Files ====
+.DS_Store
+Thumbs.db
+
+# ==== Installers ====
+*.run
+Miniconda3-*.sh
+
+# ==== Project Specific ====
+my_work_flow.md
+
+# StaConGrasp local exclusions
+data
+/tectonic
+/torch
+/checkpoints/
+/diagnostics/
+
+# Presentation/local visualization artifacts
+/thirdparty/
+/figure/
+/gif/
+/paper_figures/
+/DepthCamera_*.json
+/RenderOption_*.json
+/DepthCapture_*.png
+/RECOVERY_CONTEXT.md
+/src/test.py
+
+# Removed non-core source folders
+/src/cadgrasp/real_exp/
+/src/cadgrasp/region_contact/visualize/
+/src/cadgrasp/region_contact/visualize_paper/
+/src/cadgrasp/region_contact/compute_eff/
+/src/cadgrasp/ibs/scripts/
+/src/cadgrasp/region_contact/最终的运行命令*.txt
+
+# Removed legacy non-dynamic anchor-patch prediction entries
+/src/cadgrasp/region_contact/predict_anchor_patch_all.py
+/src/cadgrasp/region_contact/predict_anchor_patch_scheme_c.py
+/src/cadgrasp/region_contact/predict_anchor_patch_scheme_c_all.py
+
+# Removed old baseline prediction entries; keep only v16e StaConGrasp-compatible backends
+/src/cadgrasp/baseline/eval/predict_dexterous*.py
+!/src/cadgrasp/baseline/eval/predict_dexterous_sdf_offline_v4_energy_guided_hybrid_ann_meta_v16e_pointnext_grasped_object_offset.py
+!/src/cadgrasp/baseline/eval/predict_dexterous_sdf_offline_v4_energy_guided_hybrid_ann_meta_v16e_grasped_object_offset.py
+!/src/cadgrasp/baseline/eval/predict_dexterous_all_sdf_offline_hybrid_v16e_pointnext_grasped_object_offset.py
+!/src/cadgrasp/baseline/eval/predict_dexterous_all_sdf_offline_hybrid_v16e_grasped_object_offset.py
