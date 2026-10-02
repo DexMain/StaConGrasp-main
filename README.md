@@ -30,7 +30,6 @@ conda activate stacongrasp
 ### 2. Install PyTorch
 
 ```bash
-# Example for CUDA 12.1 — adjust to your CUDA version
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
